@@ -37,6 +37,11 @@ exports.init = function(workers, first_port, proxy_port, session_hash, no_socket
 				port : first_port + n
 			}
 		});
+
+                proxies[n].on('error', function (err, req, res) {
+                        res.writeHead(500);
+                        res.end();
+                });
 	}
 
 	var server = http.createServer(function(req, res) {
